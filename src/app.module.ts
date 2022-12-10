@@ -5,9 +5,16 @@ import { MarketsModule } from './markets/markets.module';
 import { BranchesModule } from './branches/branches.module';
 import { ProductsModule } from './products/products.module';
 import { WorkersModule } from './workers/workers.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [MarketsModule, BranchesModule, ProductsModule, WorkersModule],
+  imports: [
+    ConfigModule.forRoot(),
+    MarketsModule,
+    BranchesModule,
+    ProductsModule,
+    WorkersModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
