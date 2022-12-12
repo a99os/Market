@@ -19,7 +19,6 @@ import { SequelizeModule } from '@nestjs/sequelize';
       database: 'aeykzcag',
       models: [],
     }),
-    ,
     ConfigModule.forRoot(),
     MarketsModule,
     BranchesModule,
