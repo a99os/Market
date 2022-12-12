@@ -13,6 +13,6 @@ export class Market extends Model<Market, MarketCreationAttrs> {
   })
   id: number;
 
-  @Column({ type: DataType.INTEGER, unique: true, allowNull: false })
+  @Column({ type: DataType.STRING, unique: true, allowNull: false })
   name: string;
 }

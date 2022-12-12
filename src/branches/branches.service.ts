@@ -1,26 +1,31 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
+import { Branches } from './branches.model';
 import { CreateBranchDto } from './dto/create-branch.dto';
 import { UpdateBranchDto } from './dto/update-branch.dto';
 
 @Injectable()
 export class BranchesService {
+  constructor(
+    @InjectModel(Branches) private branchesRepository: typeof Branches,
+  ) {}
   create(createBranchDto: CreateBranchDto) {
-    return 'This action adds a new branch';
+    return this.branchesRepository.create(createBranchDto);
   }
 
   findAll() {
-    return `This action returns all branches`;
+    return this.branchesRepository.findAll();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} branch`;
+    return this.branchesRepository.findOne({ where: { id } });
   }
 
   update(id: number, updateBranchDto: UpdateBranchDto) {
-    return `This action updates a #${id} branch`;
+    return this.branchesRepository.update(UpdateBranchDto, { where: { id } });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} branch`;
+    return this.branchesRepository.destroy({ where: { id } });
   }
 }

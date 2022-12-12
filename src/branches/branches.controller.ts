@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Put,
+  UsePipes,
+} from '@nestjs/common';
+import { Validator } from 'class-validator';
 import { BranchesService } from './branches.service';
 import { CreateBranchDto } from './dto/create-branch.dto';
 import { UpdateBranchDto } from './dto/update-branch.dto';
@@ -22,13 +33,19 @@ export class BranchesController {
     return this.branchesService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBranchDto: UpdateBranchDto) {
-    return this.branchesService.update(+id, updateBranchDto);
+  @Put(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateBranchDto: UpdateBranchDto,
+  ) {
+    await this.branchesService.update(+id, updateBranchDto);
+    return this.branchesService.findOne(+id);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.branchesService.remove(+id);
+  async remove(@Param('id') id: string) {
+    const branch = await this.branchesService.findOne(+id);
+    this.branchesService.remove(+id);
+    return branch;
   }
 }
