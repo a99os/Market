@@ -22,6 +22,8 @@ export class BranchesService {
   }
 
   update(id: number, updateBranchDto: UpdateBranchDto) {
+    console.log(updateBranchDto);
+
     return this.branchesRepository.update(UpdateBranchDto, { where: { id } });
   }
 

@@ -1,26 +1,29 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
 import { CreateWorkerDto } from './dto/create-worker.dto';
 import { UpdateWorkerDto } from './dto/update-worker.dto';
+import { Workers } from './workers.model';
 
 @Injectable()
 export class WorkersService {
+  constructor(@InjectModel(Workers) private workersRepo: typeof Workers) {}
   create(createWorkerDto: CreateWorkerDto) {
-    return 'This action adds a new worker';
+    return this.workersRepo.create(createWorkerDto);
   }
 
   findAll() {
-    return `This action returns all workers`;
+    return this.workersRepo.findAll();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} worker`;
+    return this.workersRepo.findOne({ where: { id } });
   }
 
   update(id: number, updateWorkerDto: UpdateWorkerDto) {
-    return `This action updates a #${id} worker`;
+    return this.workersRepo.update(updateWorkerDto, { where: { id } });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} worker`;
+    return this.workersRepo.destroy({ where: { id } });
   }
 }
